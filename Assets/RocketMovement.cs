@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class RocketMovement : MonoBehaviour
 {
     Rigidbody rb;
-    //AudioSource audio;
+    AudioSource audio;
     [SerializeField]
     float thrust;
     [SerializeField]
@@ -16,7 +16,7 @@ public class RocketMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //audio = GetComponent<AudioSource>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,17 +33,17 @@ public class RocketMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             rb.AddRelativeForce(Vector3.up * thrust);
-            //if (audio.isPlaying == false)
-            //{
-            //    audio.Play();
-            //}
+            if (audio.isPlaying == false)
+            {
+                audio.Play();
+            }
 
 
         }
-        //else
-        //{
-        //    audio.Stop();
-        //}
+        else
+        {
+            audio.Stop();
+        }
     }
     private void RocketControls()
     {
@@ -68,15 +68,19 @@ public class RocketMovement : MonoBehaviour
         {
             Invoke("NextLevel",0.5f);
         }
+        if(collision.gameObject.tag == "FinishTwo")
+        {
+            SceneManager.LoadScene(3);
+        }
     }
     void SameLevel()
     {
         Destroy(gameObject);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     private void NextLevel()
     {
         Destroy(gameObject);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }
